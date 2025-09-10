@@ -1,0 +1,50 @@
+"use client";
+import { motion } from "framer-motion";
+import { ReactNode } from "react";
+
+/**
+ * components/animations/FadeIn.tsx
+ * 
+ * Purpose: Provides clean, professional fade-in animations for content sections.
+ * Contains: Smooth fade-in with optional slide effects for professional appearance.
+ * Core functionalities: Animated content reveal with customizable timing and direction.
+ */
+
+interface FadeInProps {
+  children: ReactNode;
+  delay?: number;
+  duration?: number;
+  direction?: "up" | "down" | "left" | "right" | "none";
+  className?: string;
+}
+
+export default function FadeIn({ 
+  children, 
+  delay = 0, 
+  duration = 0.6, 
+  direction = "up",
+  className = "" 
+}: FadeInProps) {
+  const directionVariants = {
+    up: { y: 20, opacity: 0 },
+    down: { y: -20, opacity: 0 },
+    left: { x: -20, opacity: 0 },
+    right: { x: 20, opacity: 0 },
+    none: { opacity: 0 }
+  };
+
+  return (
+    <motion.div
+      initial={directionVariants[direction]}
+      animate={{ y: 0, x: 0, opacity: 1 }}
+      transition={{ 
+        duration, 
+        delay,
+        ease: [0.25, 0.25, 0.25, 0.75]
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
