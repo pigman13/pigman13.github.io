@@ -1,6 +1,6 @@
 "use client";
 import { notFound } from "next/navigation";
-import { getProjectBySlug } from "../../../lib/projectsData";
+import { getProjectBySlug, projects } from "../../../lib/projectsData";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -11,6 +11,16 @@ import { motion } from "framer-motion";
  * Contains: Project overview, impact metrics, technology stack, and technical details.
  * Core functionalities: Renders comprehensive project information with animations and professional styling.
  */
+
+/**
+ * Generate static params for all project slugs
+ * Required for static export with dynamic routes
+ */
+export async function generateStaticParams() {
+  return projects.map((project) => ({
+    slug: project.slug,
+  }));
+}
 
 export default function ProjectDetail({ params }: { params: { slug: string } }) {
   const project = getProjectBySlug(params.slug);
